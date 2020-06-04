@@ -31,6 +31,8 @@ Suggested milestones for incremental development:
  - Fix main() to use the extracted_names list
 """
 
+__author__ = "Drew Radcliff"
+
 import sys
 import re
 import argparse
@@ -43,9 +45,18 @@ def extract_names(filename):
     the name-rank strings in alphabetical order.
     ['2006', 'Aaliyah 91', 'Aaron 57', 'Abagail 895', ...]
     """
-    names = []
-    # +++your code here+++
-    return names
+    with open(filename) as f:
+        name_dict = {}
+        names = re.findall(
+            r"<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>", f.read())
+        for name in names:
+            if not name[1] in name_dict:
+                name_dict[name[1]] = name[0]
+            if not name[2] in name_dict:
+                name_dict[name[2]] = name[0]
+
+        sorted_list = sorted(name_dict.items())
+    return [filename[4:8]] + [item for sublist in sorted_list for item in sublist]
 
 
 def create_parser():
@@ -77,6 +88,8 @@ def main(args):
     # option flag
     create_summary = ns.summaryfile
 
+    for file in file_list:
+        print(extract_names(file))
     # For each filename, call `extract_names()` with that single file.
     # Format the resulting list as a vertical list (separated by newline \n).
     # Use the create_summary flag to decide whether to print the list
