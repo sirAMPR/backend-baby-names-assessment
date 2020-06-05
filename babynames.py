@@ -55,8 +55,7 @@ def extract_names(filename):
             if not name[2] in name_dict:
                 name_dict[name[2]] = name[0]
 
-        sorted_list = sorted(name_dict.items())
-    return [filename[4:8]] + [item for sublist in sorted_list for item in sublist]
+    return [filename[4:8]] + [' '.join(item) for item in sorted(name_dict.items())]
 
 
 def create_parser():
