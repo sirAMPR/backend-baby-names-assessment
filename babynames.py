@@ -87,14 +87,16 @@ def main(args):
     # option flag
     create_summary = ns.summaryfile
 
-    for file in file_list:
-        print(extract_names(file))
     # For each filename, call `extract_names()` with that single file.
     # Format the resulting list as a vertical list (separated by newline \n).
     # Use the create_summary flag to decide whether to print the list
     # or to write the list to a summary file (e.g. `baby1990.html.summary`).
-
-    # +++your code here+++
+    for file in file_list:
+        names = '\n'.join(extract_names(file))
+        print(names)
+        if create_summary:
+            with open(file + '.summary', 'w') as f:
+                f.write(names)
 
 
 if __name__ == '__main__':
